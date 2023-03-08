@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <meta charset="utf-8">
+        <title>Minesweeper</title>
+    </head>
+    <body class="text-center" oncontextmenu="return false;">
+        <div id="timer">
+            <div id="time">⏳<span id="countdown"></span></div>
+        </div>
+        <div id="menu">
+            <button id="reset" class="btn btn-light" title="Restrat">Restart Game</button>
+            <p id="bombs" title="Guessed bombs">💣<span id="no-bombs"></span></p>
+        </div>
+        <form id="level">
+            <p id="title">MINESWEEPER</p>
+            <div class="container">
+                <a id="easy" class="button" href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Easy
+                </a>
+                <a id="medium" class="button" href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Medium
+                </a>
+                <a id="extreme" class="button" href="#">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Extreme
+                </a>
+            </div>
+        </form>
+        <form id="board">
+            <table id="table"></table>
+        </form>
+    </body>
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+</html>
