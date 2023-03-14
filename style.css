@@ -3,21 +3,21 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
-  }
+}
   
-  #easy {
+#easy {
     --color: aqua;
-  }
+}
   
-  #medium {
+#medium {
     --color: #338cd6;
-  }
+}
   
-  #extreme {
+#extreme {
     --color: rgb(213, 7, 7);
-  }
+}
   
-  .container {
+.container {
     width: 30vh;
     min-height:40vh;
     display: flex;
@@ -25,9 +25,9 @@ body {
     align-items: center;
     flex-wrap: wrap;
     gap: 120px;
-  }
+}
   
-  @media screen and (min-width: 800px)  {
+@media screen and (min-width: 800px)  {
     .container {
       width: 100%;
       min-height:40vh;
@@ -37,9 +37,9 @@ body {
       flex-wrap: wrap;
       gap: 120px;
     }
-  }
+}
   
-  .button {
+.button {
     position: relative;
     padding: 16px 30px;
     font-size: 1.5rem;
@@ -52,15 +52,15 @@ body {
     letter-spacing: 0.1rem;
     transition: 0.5s;
     z-index: 1;
-  }
+}
   
-  .button:hover {
+.button:hover {
     color: #fff;
     border: 2px solid rgba(0, 0, 0, 0);
     box-shadow: 0 0 0px var(--color);
-  }
+}
   
-  .button::before {
+.button::before {
     content: '';
     position: absolute;
     top: 0;
@@ -71,17 +71,17 @@ body {
     z-index: -1;
     transform: scale(0);
     transition: 0.5s;
-  }
+}
   
-  .button:hover::before {
+.button:hover::before {
     transform: scale(1);
     transition-delay: 0.5s;
     box-shadow: 0 0 10px var(--color),
       0 0 30px var(--color),
       0 0 60px var(--color);
-  }
+}
   
-  .button span {
+.button span {
     position: absolute;
     background: var(--color);
     pointer-events: none;
@@ -93,106 +93,106 @@ body {
       0 0 100px var(--color);
     transition: 0.5s ease-in-out;
     transition-delay: 0.25s;
-  }
+}
   
-  .button:hover span {
+.button:hover span {
     opacity: 0;
     transition-delay: 0s;
-  }
+}
   
-  .button span:nth-child(1), .button span:nth-child(3) {
+.button span:nth-child(1), .button span:nth-child(3) {
     width: 40px;
     height: 4px;
-  }
+}
   
-  .button:hover span:nth-child(1), .button:hover span:nth-child(3) {
+.button:hover span:nth-child(1), .button:hover span:nth-child(3) {
     transform: translateX(0);
-  }
+}
   
-  .button span:nth-child(2), .button span:nth-child(4) {
+.button span:nth-child(2), .button span:nth-child(4) {
     width: 4px;
     height: 40px;
-  }
+}
   
-  .button:hover span:nth-child(1), .button:hover span:nth-child(3) {
+.button:hover span:nth-child(1), .button:hover span:nth-child(3) {
     transform: translateY(0);
-  }
+}
   
-  .button span:nth-child(1) {
+.button span:nth-child(1) {
     top: calc(50% - 2px);
     left: -50px;
     transform-origin: left;
-  }
+}
   
-  .button:hover span:nth-child(1) {
+.button:hover span:nth-child(1) {
     left: 50%;
-  }
+}
   
-  .button span:nth-child(3) {
+.button span:nth-child(3) {
     top: calc(50% - 2px);
     right: -50px;
     transform-origin: right;
-  }
+}
   
-  .button:hover span:nth-child(3) {
+.button:hover span:nth-child(3) {
     right: 50%;
-  }
+}
   
-  .button span:nth-child(2) {
+.button span:nth-child(2) {
     left: calc(50% - 2px);
     top: -50px;
     transform-origin: top;
-  }
+}
   
-  .button:hover span:nth-child(2) {
+.button:hover span:nth-child(2) {
     top: 50%;
-  }
+}
   
-  .button span:nth-child(4) {
+.button span:nth-child(4) {
     left: calc(50% - 2px);
     bottom: -50px;
     transform-origin: bottom;
-  }
+}
   
-  .button:hover span:nth-child(4 ) {
+.button:hover span:nth-child(4 ) {
     bottom: 50%;
-  }
+}
   
-  #title {
+#title {
     color: aliceblue;
-      font-size: 2rem;
-      margin-top: 30px;
-  }
+    font-size: 2rem;
+    margin-top: 30px;
+}
   
-  @media screen and (min-width: 800px)  {
+@media screen and (min-width: 800px)  {
     #title {
-      color: aliceblue;
-      font-size: 5rem;
-      margin-top: 100px;
-      margin-bottom: 50px;
+        color: aliceblue;
+        font-size: 5rem;
+        margin-top: 100px;
+        margin-bottom: 50px;
     }
-  }
+}
   
-  table, tr, td {
+table, tr, td {
     box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
     border: 2px solid rgb(87, 87, 87);
     text-align: center;
-  }
+}
   
-  td {
+td {
     box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
     width: 30px;
     height: 30px;
     font-size: small;
-  }
+}
   
-  #table {
+#table {
     margin: auto;
     margin-top: 60px;
     padding: 10px;
-  }
+}
   
-  div {
+div {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -200,22 +200,27 @@ body {
     text-align: center;
     color: white;
     margin-top: 30px;
-  }
+}
   
-  button {
+button {
     color: rgb(228, 224, 224);
     background-color: transparent;
-  }
+}
   
-  #menu, #timer {
+#menu, #timer {
     font-size: xx-large;
     visibility: hidden;
-  }
+}
   
-  #countdown {
+#countdown {
     color: rgb(235, 235, 235);
-  }
+}
   
-  #time {
+#time {
     font-size: 30px;
-  }
+}
+
+#debug {
+    margin-top: 15px;
+}
+  
