@@ -1,4 +1,8 @@
 let board = [];
+let directionLine = [-1, 0, 1, 0];
+let directionColumn = [0, 1, 0, -1];
+let directionPrincipal = [1, 1, -1, -1];
+let directionSecundary = [1 , -1, -1, 1];
 
 // by clicking on any of the buttons corresponding to the chosen level, 
 // the minesweeper board will be displayed, as well as the time left to solve the game
@@ -37,11 +41,15 @@ reset.onclick = () => {
 }
 
 // adds a flag if clicking the left button of the mouse
-function completeBoard(event, cell) {
+function completeBoard(event, cell, line, column, tableSize) {
     if (event.button == 0) {
-        // TODO:
-        // function for mining must be called here
-    } else if (event.button == 2) {
+        if (board[line][column] == 'bomb') {
+            // TODO:
+            // if clicking on a bomb, the game is over;
+        } else {
+            mineField(line, column, tableSize);
+        }
+    } else if (event.button == 2 && board[line][column] != 'mined') {
         if (cell.innerText == "") {
             cell.innerText = "🚩";
         } else {
@@ -59,8 +67,9 @@ function createTable(tableSize) {
         let row = document.createElement("tr");
         for (let j = 0; j < tableSize; ++j) {
             let cell = document.createElement("td");
+            cell.id = i + " " + j;
             row.appendChild(cell);
-            cell.addEventListener('mousedown', event => completeBoard(event, cell));
+            cell.addEventListener('mousedown', event => completeBoard(event, cell, i, j, tableSize));
         }
         table.appendChild(row);
     }
@@ -109,9 +118,36 @@ function getDistanceBomb(tableSize) {
     }
 }
 
+// marks each cell that is mined
+function markMinedCell(cell, line, column) {
+    cell.style.backgroundColor = 'white';
+    board[line][column] = 'mined';
+}
+
+// by clicking on a cell, the mine will open according to the rules
+// of the game
+function mineField(line, column, tableSize) {
+    let currentCell = document.getElementById(line + " " + column);
+    if (line > tableSize - 1 || column > tableSize - 1 || line < 0 || column < 0 || currentCell.innerText == "🚩") {
+        return;
+    }
+    if (board[line][column] >= 1) {
+        currentCell.innerText = board[line][column];
+        markMinedCell(currentCell, line, column);
+        return;
+    }
+    if (board[line][column] == 0) {
+        for (let i = 0; i < 4; ++i) {
+            markMinedCell(currentCell, line, column);
+            mineField(line + directionLine[i], column + directionColumn[i], tableSize);
+            mineField(line + directionPrincipal[i], column + directionSecundary[i], tableSize);
+        }
+    }
+}
+
 // plants the bombs in the grid in random positions
 function plantBombs(noBombs) {
-    for (let i = 0; i < noBombs; ++i) {
+    for (let i = 0; i <= noBombs * 2; ++i) {
         board[randomCell(noBombs - 1)][randomCell(noBombs - 1)] = "bomb";
     }
 }
