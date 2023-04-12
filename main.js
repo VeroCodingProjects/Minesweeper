@@ -3,6 +3,9 @@ let directionLine = [-1, 0, 1, 0];
 let directionColumn = [0, 1, 0, -1];
 let directionPrincipal = [1, 1, -1, -1];
 let directionSecundary = [1 , -1, -1, 1];
+let endGameStatus = false;
+let timeExpired = false;
+let minedCell = 0;
 
 // by clicking on any of the buttons corresponding to the chosen level, 
 // the minesweeper board will be displayed, as well as the time left to solve the game
@@ -10,18 +13,21 @@ easy.addEventListener("click", () => {
     createTable(10);
     displayMenu();
     startTimer(300, countdown);
+    bombs.innerText = 20;
 });
 
 medium.addEventListener("click", () => {
     createTable(15);
     displayMenu();
     startTimer(900, countdown);
+    bombs.innerText = 30;
 });
 
 extreme.addEventListener("click", () => {
     createTable(20);
     displayMenu();
     startTimer(1200, countdown);
+    bombs.innerText = 40;
 });
 
 // debug button in order to see the the transposed matrix 
@@ -40,21 +46,49 @@ reset.onclick = () => {
    window.location.reload();
 }
 
+// if clicking on a bomb, all bombs in the field will be explosed
+function bombExplosion(tableSize) {
+    for (let i = 0; i < tableSize; ++i) {
+        for (let j = 0; j < tableSize; ++j) {
+            if (board[i][j] == 'bomb') {
+                document.getElementById(i + " " + j).innerText = "💣";
+            }
+        }
+    }
+}
+
+// for each click, the board will be verified 
+// in order to determine if it was correct completed
+// after that, it is determined the status of the game
+function checkBoard(tableSize) {
+    if (bombs.innerText == 0) {
+        statusGame(tableSize);
+    }
+}
+
 // adds a flag if clicking the left button of the mouse
+// if a bomb is mined, the field will explode
+// updated the status of the game
 function completeBoard(event, cell, line, column, tableSize) {
-    if (event.button == 0) {
-        if (board[line][column] == 'bomb') {
-            // TODO:
-            // if clicking on a bomb, the game is over;
+    if (event.button == 0 && endGameStatus == false) {
+        if (board[line][column] == 'bomb' && cell.innerText != "🚩") {
+            bombExplosion(tableSize);
+            endGameStatus = true;
+            statusGame(tableSize);
         } else {
             mineField(line, column, tableSize);
         }
-    } else if (event.button == 2 && board[line][column] != 'mined') {
+    } else if (event.button == 2 && board[line][column] != 'mined' && endGameStatus == false) {
         if (cell.innerText == "") {
             cell.innerText = "🚩";
+            --bombs.innerText;
         } else {
             cell.innerText = "";
+            ++bombs.innerText;
         }
+    }
+    if (minedCell == tableSize * tableSize - tableSize * 2) {
+        checkBoard(tableSize);
     }
 }
 
@@ -134,9 +168,11 @@ function mineField(line, column, tableSize) {
     if (board[line][column] >= 1) {
         currentCell.innerText = board[line][column];
         markMinedCell(currentCell, line, column);
+        ++minedCell;
         return;
     }
     if (board[line][column] == 0) {
+        ++minedCell;
         for (let i = 0; i < 4; ++i) {
             markMinedCell(currentCell, line, column);
             mineField(line + directionLine[i], column + directionColumn[i], tableSize);
@@ -147,8 +183,14 @@ function mineField(line, column, tableSize) {
 
 // plants the bombs in the grid in random positions
 function plantBombs(noBombs) {
-    for (let i = 0; i <= noBombs * 2; ++i) {
-        board[randomCell(noBombs - 1)][randomCell(noBombs - 1)] = "bomb";
+    for (let i = 0; i < noBombs * 2; ++i) {
+        let randomLine = randomCell(noBombs - 1);
+        let randomColumn = randomCell(noBombs - 1);
+        while (board[randomLine][randomColumn] == "bomb") {
+            randomLine = randomCell(noBombs - 1);
+            randomColumn = randomCell(noBombs - 1);
+        }
+        board[randomLine][randomColumn] = "bomb";
     }
 }
 
@@ -168,7 +210,22 @@ function startTimer(duration, display) {
         seconds = seconds < 10 ? "0" + seconds : seconds;
         display.textContent = minutes + ":" + seconds;
         if (--timer < 0) {
-            timer = duration;
+            timeExpired = true;
+            statusGame();
         }
     }, 1000);
+}
+
+// determine if the game is won or lost
+function statusGame(tableSize) {
+    if (endGameStatus == true || timeExpired == true) {
+        timer.innerText = 'You lost ☹';
+        bomb.style.display = 'none';
+        endGameStatus = true;
+    }
+    if (minedCell == tableSize * tableSize - tableSize * 2 && bombs.innerText == 0) {
+        timer.innerText = 'You won 😊';
+        bomb.style.display = 'none';
+        endGameStatus = true;
+    }
 }
